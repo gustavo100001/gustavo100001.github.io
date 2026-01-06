@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Desafio Assustador 😱💖</title>
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(135deg,#2b1055,#7a2bc9);
+  font-family:Arial;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+
+.container{
+  background:#ffffff;
+  padding:20px;
+  border-radius:25px;
+  box-shadow:0 0 25px rgba(0,0,0,0.35);
+  text-align:center;
+  max-width:400px;
+  color:#333;
+}
+
+#gameArea{
+  width:300px;
+  height:350px;
+  background:#e9d9ff;
+  border-radius:15px;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
+}
+
+.ghost{
+  position:absolute;
+  font-size:34px;
+  animation:fall 3s linear forwards;
+  cursor:pointer;
+}
+
+@keyframes fall{
+  from{ top:-40px; }
+  to{ top:360px; }
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:15px;
+  background:#8e44ff;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#result{
+  font-size:18px;
+  margin-top:10px;
+  color:#444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>👻 Desafio Fantasminha 👻</h2>
+
+  <p>
+    Toque nos fantasmas antes que eles fujam!<br><br>
+    Se você conseguir <b>10 pontos</b>…<br>
+    você tem que me contar uma
+    <b>história de terror bem assustadora 😱</b><br><br>
+    E como recompensa...<br>
+    <b>eu vou te beijar 15 vezes seguidas 😘😘😘</b>
+  </p>
+
+  <div id="gameArea"></div>
+
+  <p><b>Pontos:</b> <span id="score">0</span></p>
+
+  <button onclick="startGame()">Começar 👻</button>
+
+  <p id="result"></p>
+</div>
+
+<script>
+let score = 0;
+let playing = false;
+
+function startGame(){
+  score = 0;
+  playing = true;
+  document.getElementById("score").innerText = score;
+  document.getElementById("result").innerText = "";
+  
+  let interval = setInterval(()=>{
+
+    if(!playing){
+      clearInterval(interval);
+      return;
+    }
+
+    createGhost();
+
+    if(score >= 10){
+      playing = false;
+      document.getElementById("result").innerHTML = 
+      "PARABÉNS! 👻💖<br><br>" +
+      "Agora você precisa me contar uma história de terror bem assustadora 😱<br><br>" +
+      "E como recompensa... eu te devo <b>15 beijos bem apaixonados 💋💋💋</b>";
+      clearInterval(interval);
+    }
+
+  },850);
+}
+
+function createGhost(){
+  let area = document.getElementById("gameArea");
+  let ghost = document.createElement("div");
+  ghost.className = "ghost";
+  ghost.innerHTML = "👻";
+  ghost.style.left = Math.random()*260 + "px";
+
+  ghost.onclick = function(){
+    score++;
+    document.getElementById("score").innerText = score;
+    ghost.remove();
+  }
+
+  setTimeout(()=>ghost.remove(),3000);
+  area.appendChild(ghost);
+}
+</script>
+
+</body>
+</html>
+
 
